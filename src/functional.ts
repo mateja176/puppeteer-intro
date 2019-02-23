@@ -5,12 +5,17 @@ const url = "https://google.com/search?q=functional+programming"
 puppeteer.launch().then(browser =>
   browser.newPage().then(page =>
     page
-      .goto(url, { waitUntil: "networkidle2" })
-      .then(() =>
-        page.pdf({
-          path: "src/images/functional-programming.pdf",
-          format: "A4",
-        }),
+      .goto(url, { waitUntil: "networkidle0" })
+      .then(
+        () =>
+          page.pdf({
+            path: "src/images/functional-programming.pdf",
+            format: "A4",
+          }),
+        // the pdf preserves links but does not display images
+        // page.screenshot({
+        //   path: "src/images/functional-programming.png",
+        // }),
       )
       .then(() => browser.close()),
   ),
